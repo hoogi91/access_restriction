@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" product-name="access_restriction">
+		<header/>
+		<body>
+			<trans-unit id="recordtype">
+				<source>Access Restriction</source>
+			</trans-unit>
+			<trans-unit id="tx_accessrestriction_restrictions">
+				<source>IP Restrictions</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

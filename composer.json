@@ -1,0 +1,24 @@
+{
+    "type": "typo3-cms-extension",
+    "name": "hoogi91/access-restriction",
+    "description": "protect access to pages or content elements via frontend groups that are only added when specific access restrictions are matching",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Thorsten Hogenkamp",
+            "email": "hoogi20@googlemail.com"
+        },
+        {
+            "name": "UDG Rhein-Main TYPO3 Development Team",
+            "email": "typo3-mainz@udg.de"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^8.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hoogi91\\AccessRestriction\\": "Classes/"
+        }
+    }
+}
