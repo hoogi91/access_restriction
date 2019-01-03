@@ -23,5 +23,21 @@
         "psr-4": {
             "Hoogi91\\AccessRestriction\\": "Classes/"
         }
+    },
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "mkdir -p .Build/web/typo3conf/ext/",
+            "[ -L .Build/web/typo3conf/ext/access_restriction ] || ln -snvf ../../../../. .Build/web/typo3conf/ext/access_restriction"
+        ]
+    },
+    "extra": {
+        "typo3/cms": {
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "web-dir": ".Build/web"
+        }
     }
 }
