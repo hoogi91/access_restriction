@@ -14,8 +14,8 @@ class CacheService
     const CACHE_NAME = 'cache_accessrestriction';
 
     /**
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      * @var \TYPO3\CMS\Core\Cache\CacheManager
-     * @inject
      */
     protected $cacheManager;
 

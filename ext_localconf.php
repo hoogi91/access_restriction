@@ -6,8 +6,8 @@ call_user_func(function ($extKey) {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][$extKey] = \Hoogi91\AccessRestriction\Hook\DataHandler::class;
 
     // override tyoscriptfrontend controller to set user group list without hazzle
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController::class] = array(
-        'className' => \Hoogi91\AccessRestriction\Hook\TypoScriptFrontendController::class,
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Core\Context\UserAspect::class] = array(
+        'className' => \Hoogi91\AccessRestriction\Hook\UserAspect::class,
     );
 
     // add caching configuration for reading access restricted frontend groups

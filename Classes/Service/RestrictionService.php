@@ -18,8 +18,8 @@ class RestrictionService
     const CACHE_IDENTIFIER = 'frontendGroups';
 
     /**
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      * @var \Hoogi91\AccessRestriction\Service\CacheService
-     * @inject
      */
     protected $cacheService;
 
