@@ -28,13 +28,11 @@ call_user_func(function ($table) {
         // define our own show item type list
         $feGroupTCA['types']['access_restriction']['showitem'] = '
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                title, tx_accessrestriction_restrictions,
+                tx_extbase_type, title, tx_accessrestriction_restrictions,
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                 hidden,
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes,
-                description,
-            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended,
-            tx_extbase_type
+                description
         ';
     } else {
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
