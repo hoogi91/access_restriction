@@ -14,6 +14,7 @@
     }
   ],
   "require": {
+    "php": ">=7.1",
     "typo3/cms-frontend": "^9.5"
   },
   "require-dev": {
