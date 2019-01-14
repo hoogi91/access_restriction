@@ -23,6 +23,8 @@ class DataHandler
      * @param string $table
      * @param int    $id
      * @param array  $fields
+     *
+     * @phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
      */
     public function processDatamap_afterDatabaseOperations($status, $table, $id, $fields = [])
     {

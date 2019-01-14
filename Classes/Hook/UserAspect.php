@@ -33,5 +33,4 @@ class UserAspect extends \TYPO3\CMS\Core\Context\UserAspect
         }
         return $groups;
     }
-
 }

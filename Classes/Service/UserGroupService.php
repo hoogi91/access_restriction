@@ -41,5 +41,4 @@ class UserGroupService
         // iterate and add all validated groups to users group list
         return array_filter($groups);
     }
-
 }
