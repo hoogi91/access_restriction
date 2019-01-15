@@ -44,14 +44,9 @@ class IpValidationService
      */
     public function findInList($list, $compareIp = null)
     {
-        $list = trim($list);
-        if (empty($list)) {
-            return false;
-        }
-
         // check if list needs to be converted to array
         if (is_string($list)) {
-            $list = GeneralUtility::trimExplode(PHP_EOL, $list, true);
+            $list = GeneralUtility::trimExplode(PHP_EOL, trim($list), true);
         }
 
         if (empty($list) || !is_array($list)) {
