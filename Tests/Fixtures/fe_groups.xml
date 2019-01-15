@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+    <fe_groups>
+        <uid>1</uid>
+        <tx_extbase_type>0</tx_extbase_type>
+        <pid>0</pid>
+        <tstamp>1366642540</tstamp>
+        <crdate>1366642540</crdate>
+        <cruser_id>0</cruser_id>
+        <title>IP Restricted (with wrong extbase type)</title>
+        <hidden>0</hidden>
+        <deleted>0</deleted>
+        <tx_accessrestriction_restrictions>
+            192.168.178.230
+            192.168.178.233-192.168.178.235
+            192.168.178.1/26
+        </tx_accessrestriction_restrictions>
+    </fe_groups>
+    <fe_groups>
+        <uid>2</uid>
+        <tx_extbase_type>access_restriction</tx_extbase_type>
+        <pid>0</pid>
+        <tstamp>1366642540</tstamp>
+        <crdate>1366642540</crdate>
+        <cruser_id>0</cruser_id>
+        <title>IP Restricted (hidden)</title>
+        <hidden>1</hidden>
+        <deleted>0</deleted>
+        <tx_accessrestriction_restrictions>
+            192.168.178.230
+            192.168.178.233-192.168.178.235
+            192.168.178.1/26
+        </tx_accessrestriction_restrictions>
+    </fe_groups>
+    <fe_groups>
+        <uid>3</uid>
+        <tx_extbase_type>access_restriction</tx_extbase_type>
+        <pid>0</pid>
+        <tstamp>1366642540</tstamp>
+        <crdate>1366642540</crdate>
+        <cruser_id>0</cruser_id>
+        <title>IP Restricted (deleted)</title>
+        <hidden>0</hidden>
+        <deleted>1</deleted>
+        <tx_accessrestriction_restrictions>
+            192.168.178.230
+            192.168.178.233-192.168.178.235
+            192.168.178.1/26
+        </tx_accessrestriction_restrictions>
+    </fe_groups>
+    <fe_groups>
+        <uid>4</uid>
+        <tx_extbase_type>access_restriction</tx_extbase_type>
+        <pid>0</pid>
+        <tstamp>1366642540</tstamp>
+        <crdate>1366642540</crdate>
+        <cruser_id>0</cruser_id>
+        <title>IP Restricted</title>
+        <hidden>0</hidden>
+        <deleted>0</deleted>
+        <tx_accessrestriction_restrictions>
+            192.168.178.230
+            192.168.178.233-192.168.178.235
+            192.168.178.1/26
+        </tx_accessrestriction_restrictions>
+    </fe_groups>
+</dataset>

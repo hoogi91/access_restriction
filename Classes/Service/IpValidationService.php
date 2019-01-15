@@ -44,6 +44,7 @@ class IpValidationService
      */
     public function findInList($list, $compareIp = null)
     {
+        $list = trim($list);
         if (empty($list)) {
             return false;
         }
