@@ -13,4 +13,9 @@ $EM_CONF[$_EXTKEY] = [
             'frontend' => '9.5.0-9.99.99',
         ],
     ],
+    'autoload'     => [
+        'psr-4' => [
+            'Hoogi91\\AccessRestriction\\' => 'Classes',
+        ],
+    ],
 ];

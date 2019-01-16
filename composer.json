@@ -41,6 +41,13 @@
     "post-autoload-dump": [
       "mkdir -p .Build/web/typo3conf/ext/",
       "[ -L .Build/web/typo3conf/ext/access_restriction ] || ln -snvf ../../../../. .Build/web/typo3conf/ext/access_restriction"
+    ],
+    "extension-cleanup-for-release": [
+      "rm -rf Tests/",
+      "rm .gitattributes",
+      "rm .gitignore",
+      "rm .travis.yml",
+      "rm composer.lock"
     ]
   },
   "extra": {
