@@ -38,7 +38,7 @@ class IpValidationService
 
     /**
      * @param string|array $list
-     * @param string       $compareIp
+     * @param string $compareIp
      *
      * @return bool
      */
@@ -76,7 +76,7 @@ class IpValidationService
         list ($subnet, $bits) = GeneralUtility::trimExplode('/', $ipOrRange, true, 2);
         if (!empty($bits)) {
             $subnet = ip2long($subnet);
-            $mask = -1 << (32 - $bits);
+            $mask = -1 << (32 - (int)$bits);
             $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
             return ($remoteAddress & $mask) === $subnet;
         }
