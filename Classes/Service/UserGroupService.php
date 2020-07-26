@@ -10,14 +10,14 @@ class UserGroupService
 {
 
     /**
-     * @TYPO3\CMS\Extbase\Annotation\Inject
      * @var \Hoogi91\AccessRestriction\Service\RestrictionService
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $restrictionService;
 
     /**
-     * @TYPO3\CMS\Extbase\Annotation\Inject
      * @var \Hoogi91\AccessRestriction\Service\IpValidationService
+     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $ipValidationService;
 

@@ -4,6 +4,7 @@ namespace Hoogi91\AccessRestriction\Service;
 
 use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
+use TYPO3\CMS\Core\Information\Typo3Version;
 
 /**
  * Class CacheService
@@ -11,7 +12,7 @@ use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
  */
 class CacheService
 {
-    const CACHE_NAME = 'cache_accessrestriction';
+    const CACHE_NAME = 'accessrestriction';
 
     /**
      * @TYPO3\CMS\Extbase\Annotation\Inject
@@ -35,7 +36,7 @@ class CacheService
 
     /**
      * @param string $identifier
-     * @param mixed  $data
+     * @param mixed $data
      */
     public function set($identifier, $data)
     {
@@ -64,6 +65,10 @@ class CacheService
      */
     protected function getCache()
     {
-        return $this->cacheManager->getCache(static::CACHE_NAME);
+        $cacheName = self::CACHE_NAME;
+        if (class_exists(Typo3Version::class) === false || (new Typo3Version())->getMajorVersion() < 10) {
+            $cacheName = 'cache_' . $cacheName;
+        }
+        return $this->cacheManager->getCache($cacheName);
     }
 }

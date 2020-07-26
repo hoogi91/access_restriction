@@ -7,6 +7,7 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
+use TYPO3\CMS\Core\Information\Typo3Version;
 
 /**
  * Class CacheServiceTest
@@ -33,16 +34,20 @@ class CacheServiceTest extends UnitTestCase
             'getCache',
         ])->getMock();
 
+        $cacheName = class_exists(Typo3Version::class) && (new Typo3Version())->getMajorVersion() >= 10
+            ? CacheService::CACHE_NAME
+            : 'cache_'. CacheService::CACHE_NAME;
+
         // only instantiate cache manager for this test class
         // cause otherwise singleton interface will set this for all requests/tests
         $cacheManager = new CacheManager();
         $cacheManager->setCacheConfigurations([
-            'cache_accessrestriction' => [
+            $cacheName => [
                 'backend'  => TransientMemoryBackend::class,
                 'frontend' => VariableFrontend::class,
             ],
         ]);
-        $this->cacheService->method('getCache')->willReturn($cacheManager->getCache(CacheService::CACHE_NAME));
+        $this->cacheService->method('getCache')->willReturn($cacheManager->getCache($cacheName));
 
         $this->invalidCacheService = $this->getMockBuilder(CacheService::class)->setMethods([
             'getCache',
