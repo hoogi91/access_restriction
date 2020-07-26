@@ -15,7 +15,7 @@
   ],
   "require": {
     "php": ">=7.2",
-    "typo3/cms-frontend": "^9.5"
+    "typo3/cms-frontend": ">=9.5.0 <10.4.99"
   },
   "require-dev": {
     "nimut/testing-framework": "^4.0",
