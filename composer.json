@@ -46,10 +46,8 @@
       "[ -L .Build/web/typo3conf/ext/access_restriction ] || ln -snvf ../../../../. .Build/web/typo3conf/ext/access_restriction"
     ],
     "extension-cleanup-for-release": [
-      "rm -rf Tests/",
-      "rm -f .gitattributes",
-      "rm -f .gitignore",
-      "rm -f composer.lock"
+      "rm -rf .github/ Tests/",
+      "rm -f .gitattributes .gitignore .editorconfig composer.lock",
     ]
   },
   "extra": {
