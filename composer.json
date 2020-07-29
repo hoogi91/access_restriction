@@ -47,7 +47,7 @@
     ],
     "extension-cleanup-for-release": [
       "rm -rf .github/ Tests/",
-      "rm -f .gitattributes .gitignore .editorconfig composer.lock",
+      "rm -f .gitattributes .gitignore .editorconfig composer.lock"
     ]
   },
   "extra": {
