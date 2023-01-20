@@ -12,7 +12,6 @@ class UserGroupServiceTest extends AbstractUserGroupService
     public function testEvaluatingRestrictionGroups(): void
     {
         $restrictedGroups = $this->userGroupService->getRestrictionGroups();
-        $this->assertInternalType('array', $restrictedGroups);
         $this->assertCount(1, $restrictedGroups);
         $this->assertEquals(4, $restrictedGroups[0]);
     }

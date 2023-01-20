@@ -14,7 +14,7 @@ class UserGroupService
         $this->ipValidationService = $ipValidationService;
     }
 
-    public function getRestrictionGroups()
+    public function getRestrictionGroups(): array
     {
         $groups = [];
 

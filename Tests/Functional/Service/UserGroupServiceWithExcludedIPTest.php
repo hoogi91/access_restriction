@@ -12,7 +12,6 @@ class UserGroupServiceWithExcludedIPTest extends AbstractUserGroupService
     public function testEvaluatingRestrictionGroups(): void
     {
         $restrictedGroups = $this->userGroupService->getRestrictionGroups();
-        $this->assertInternalType('array', $restrictedGroups);
         $this->assertCount(0, $restrictedGroups);
     }
 }

@@ -11,6 +11,10 @@ abstract class AbstractUserGroupService extends FunctionalTestCase
 {
     protected UserGroupService $userGroupService;
 
+    protected $testExtensionsToLoad = [
+        'typo3conf/ext/access_restriction'
+    ];
+
     protected function setUp(): void
     {
         parent::setUp();
