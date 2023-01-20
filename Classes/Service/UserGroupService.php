@@ -2,28 +2,18 @@
 
 namespace Hoogi91\AccessRestriction\Service;
 
-/**
- * Class UserGroupService
- * @package Hoogi91\AccessRestriction\Service
- */
 class UserGroupService
 {
+    private RestrictionService $restrictionService;
 
-    /**
-     * @var \Hoogi91\AccessRestriction\Service\RestrictionService
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $restrictionService;
+    private IpValidationService $ipValidationService;
 
-    /**
-     * @var \Hoogi91\AccessRestriction\Service\IpValidationService
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $ipValidationService;
+    public function __construct(RestrictionService $restrictionService, IpValidationService $ipValidationService)
+    {
+        $this->restrictionService = $restrictionService;
+        $this->ipValidationService = $ipValidationService;
+    }
 
-    /**
-     * adds frontend user groups if restriction matches for current user
-     */
     public function getRestrictionGroups()
     {
         $groups = [];

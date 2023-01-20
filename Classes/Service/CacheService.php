@@ -2,73 +2,45 @@
 
 namespace Hoogi91\AccessRestriction\Service;
 
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
-use TYPO3\CMS\Core\Information\Typo3Version;
 
-/**
- * Class CacheService
- * @package Hoogi91\AccessRestriction\Service
- */
 class CacheService
 {
-    const CACHE_NAME = 'accessrestriction';
+    private ?FrontendInterface $cache = null;
 
-    /**
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     * @var \TYPO3\CMS\Core\Cache\CacheManager
-     */
-    protected $cacheManager;
-
-    /**
-     * @param string $identifier
-     *
-     * @return mixed
-     */
-    public function get($identifier)
+    public function __construct(CacheManager $cacheManager)
     {
         try {
-            return $this->getCache()->get($identifier);
+            $this->cache = $cacheManager->getCache('accessrestriction');
         } catch (NoSuchCacheException $e) {
+            // ignore exception when cache is not found
+        }
+    }
+
+    public function get(string $identifier)
+    {
+        if ($this->cache === null) {
             return false;
         }
+        return $this->cache->get($identifier);
     }
 
     /**
-     * @param string $identifier
      * @param mixed $data
      */
-    public function set($identifier, $data)
+    public function set(string $identifier, $data): void
     {
-        try {
-            $this->getCache()->set($identifier, $data);
-        } catch (NoSuchCacheException $e) {
-            // ignore exception when cache is not found
+        if ($this->cache !== null) {
+            $this->cache->set($identifier, $data);
         }
     }
 
-    /**
-     * flush cached entries ;)
-     */
-    public function flush()
+    public function flush(): void
     {
-        try {
-            $this->getCache()->flush();
-        } catch (NoSuchCacheException $e) {
-            // ignore exception when cache is not found
+        if ($this->cache !== null) {
+            $this->cache->flush();
         }
-    }
-
-    /**
-     * @return FrontendInterface
-     * @throws NoSuchCacheException
-     */
-    protected function getCache()
-    {
-        $cacheName = self::CACHE_NAME;
-        if (class_exists(Typo3Version::class) === false || (new Typo3Version())->getMajorVersion() < 10) {
-            $cacheName = 'cache_' . $cacheName;
-        }
-        return $this->cacheManager->getCache($cacheName);
     }
 }

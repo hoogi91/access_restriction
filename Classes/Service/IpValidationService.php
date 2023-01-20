@@ -4,52 +4,31 @@ namespace Hoogi91\AccessRestriction\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * Class IpValidationService
- * @package Hoogi91\AccessRestriction\Service
- */
 class IpValidationService
 {
-    /**
-     * @var string
-     */
-    protected $remoteIp;
+    private string $remoteIp;
 
-    /**
-     * IpValidationService constructor.
-     *
-     * @param null $ip
-     */
-    public function __construct($ip = null)
+    public function __construct(?string $ip = null)
     {
-        $this->remoteIp = $ip ?? $_SERVER['REMOTE_ADDR'];
+        $this->remoteIp = $ip ?? $_SERVER['REMOTE_ADDR'] ?? '';
     }
 
-    /**
-     * @param string $ip
-     * @param string $compareIp
-     *
-     * @return bool
-     */
-    public function equals($ip, $compareIp = null)
+    public function equals(string $ip, string $compareIp = null): bool
     {
         return ip2long($compareIp ?? $this->remoteIp) === ip2long($ip);
     }
 
     /**
      * @param string|array $list
-     * @param string $compareIp
-     *
-     * @return bool
      */
-    public function findInList($list, $compareIp = null)
+    public function findInList($list, string $compareIp = null): bool
     {
         // check if list needs to be converted to array
         if (is_string($list)) {
             $list = GeneralUtility::trimExplode(PHP_EOL, trim($list), true);
         }
 
-        if (empty($list) || !is_array($list)) {
+        if (empty($list)) {
             return false;
         }
 
@@ -62,18 +41,12 @@ class IpValidationService
         return false;
     }
 
-    /**
-     * @param string $ipOrRange
-     * @param string $compareIp
-     *
-     * @return bool
-     */
-    public function validate($ipOrRange, $compareIp = null)
+    public function validate(string $ipOrRange, string $compareIp = null): bool
     {
         $remoteAddress = ip2long($compareIp ?? $this->remoteIp);
 
         // first try to match against bit range
-        list ($subnet, $bits) = GeneralUtility::trimExplode('/', $ipOrRange, true, 2);
+        list($subnet, $bits) = GeneralUtility::trimExplode('/', $ipOrRange, true, 2) + ['', ''];
         if (!empty($bits)) {
             $subnet = ip2long($subnet);
             $mask = -1 << (32 - (int)$bits);

@@ -4,13 +4,12 @@ $EM_CONF[$_EXTKEY] = [
     'description'  => 'Extension to register additional user access restrictions (IP, etc.)',
     'category'     => 'fe',
     'author'       => 'Thorsten Hogenkamp',
-    'author_email' => 'hoogi20@googlemail.com',
-    'version'      => '2.0.1',
+    'author_email' => 'thorsten@hogenkamp-bocholt.de',
+    'version'      => '3.0.0',
     'state'        => 'stable',
     'constraints'  => [
         'depends' => [
-            'typo3'    => '9.5.0-10.4.99',
-            'frontend' => '9.5.0-10.4.99',
+            'typo3' => '10.4.0-11.5.99',
         ],
     ],
     'autoload'     => [
