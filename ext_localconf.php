@@ -1,7 +1,8 @@
 <?php
-defined('TYPO3_MODE') || die();
 
-call_user_func(function ($extKey) {
+defined('TYPO3') or die();
+
+(static function (string $extKey) {
     // register datahandler hook to clear cache when a access restricted group is changed/saved
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][$extKey] = \Hoogi91\AccessRestriction\Hook\DataHandler::class;
 
@@ -27,4 +28,6 @@ call_user_func(function ($extKey) {
     if (!isset($cacheConfiguration['cache_accessrestriction']['options']['defaultLifetime'])) {
         $cacheConfiguration['cache_accessrestriction']['options']['defaultLifetime'] = 86400; // on default one day ;)
     }
-}, 'access_restriction');
+})(
+    'access_restriction'
+);

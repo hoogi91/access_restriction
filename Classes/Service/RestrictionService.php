@@ -6,27 +6,19 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * Class RestrictionService
- * @package Hoogi91\AccessRestriction\Service
- */
 class RestrictionService
 {
-    const TABLE = 'fe_groups';
-    const CACHE_IDENTIFIER = 'frontendGroups';
+    private CacheService $cacheService;
 
-    /**
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     * @var \Hoogi91\AccessRestriction\Service\CacheService
-     */
-    protected $cacheService;
+    public function __construct(CacheService $cacheService)
+    {
+        $this->cacheService = $cacheService;
+    }
 
-    /**
-     * @return array
-     */
-    public function getIpAccessRestrictions()
+    public function getIpAccessRestrictions(): array
     {
         return array_filter(array_column(
             $this->getAccessRestrictedFrontendGroups(),
@@ -35,31 +27,36 @@ class RestrictionService
         ));
     }
 
-    /**
-     * @return array
-     */
-    protected function getAccessRestrictedFrontendGroups()
+    protected function getAccessRestrictedFrontendGroups(): array
     {
         // if cache exists => return it immediately
-        if (($result = $this->cacheService->get(static::CACHE_IDENTIFIER)) !== false) {
+        if (($result = $this->cacheService->get('frontendGroups')) !== false) {
             return $result;
         }
 
         // get query builder with default restrictions and fetch complete result
-        $result = $this->getQueryWithDefaultRestrictions()->execute()->fetchAll();
+        $result = $this->getQueryWithDefaultRestrictions();
+        if ((new Typo3Version)->getMajorVersion() < 11) {
+            /**
+             * because this is legacy code
+             * @phpstan-ignore-next-line
+             * @psalm-suppress UndefinedInterfaceMethod
+             */
+            $result = $result->execute()->fetchAll();
+        } else {
+            $result = $result->executeQuery()->fetchAllAssociative();
+        }
+
 
         // save to cache and return
-        $this->cacheService->set(static::CACHE_IDENTIFIER, $result);
+        $this->cacheService->set('frontendGroups', $result);
         return $result;
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    protected function getQueryWithDefaultRestrictions()
+    protected function getQueryWithDefaultRestrictions(): QueryBuilder
     {
         /** @var QueryBuilder $queryBuilder */
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(static::TABLE);
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('fe_groups');
         $queryBuilder->resetQueryParts();
         $queryBuilder->getRestrictions()
             ->removeAll()
@@ -74,6 +71,6 @@ class RestrictionService
             );
         }
 
-        return $queryBuilder->select('*')->from(static::TABLE)->where(...$restrictions);
+        return $queryBuilder->select('*')->from('fe_groups')->where(...$restrictions);
     }
 }

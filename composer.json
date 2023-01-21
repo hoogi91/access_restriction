@@ -1,29 +1,34 @@
 {
-  "type": "typo3-cms-extension",
   "name": "hoogi91/access-restriction",
+  "type": "typo3-cms-extension",
   "description": "protect access to pages or content elements via frontend groups that are only added when specific access restrictions are matching",
   "license": "GPL-3.0-or-later",
   "authors": [
     {
       "name": "Thorsten Hogenkamp",
-      "email": "hoogi20@googlemail.com"
+      "email": "thorsten@hogenkamp-bocholt.de",
+      "homepage": "https://www.hogenkamp-bocholt.de",
+      "role": "Developer"
     },
     {
-      "name": "UDG Rhein-Main TYPO3 Development Team",
-      "email": "typo3-mainz@udg.de"
+      "name": "UDG Rhein-Main GmbH",
+      "homepage": "https://www.udg.de",
+      "role": "Contributor"
     }
   ],
   "require": {
-    "php": ">=7.2",
-    "typo3/cms-frontend": ">=9.5.0 <10.4.99"
+    "php": "~7.4.0 || ~8.0.0 || ~8.1.0",
+    "typo3/cms-frontend": "^10.4 || ^11.5"
   },
   "require-dev": {
-    "nimut/testing-framework": "^4.0 || ^5.0",
-    "phpstan/phpstan": "^0.12.1",
-    "phpunit/phpunit": "^6.0",
-    "roave/security-advisories": "dev-master",
-    "squizlabs/php_codesniffer": "^3.0",
-    "typo3/minimal": ">=9.5.0 <10.4.99"
+    "helhum/typo3-console": "^6.7 || ^7.1",
+    "phpstan/phpstan": "^1.8",
+    "phpunit/phpunit": "^9.5",
+    "roave/security-advisories": "dev-latest",
+    "squizlabs/php_codesniffer": "^3.5",
+    "typo3/minimal": "^10.4 || ^11.5",
+    "typo3/testing-framework": "^6.14",
+    "vimeo/psalm": "^5.1"
   },
   "autoload": {
     "psr-4": {
@@ -38,22 +43,24 @@
   "config": {
     "sort-packages": true,
     "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin"
+    "bin-dir": ".Build/bin",
+    "allow-plugins": {
+      "typo3/class-alias-loader": true,
+      "typo3/cms-composer-installers": true
+    }
   },
   "scripts": {
     "post-autoload-dump": [
-      "mkdir -p .Build/web/typo3conf/ext/",
-      "[ -L .Build/web/typo3conf/ext/access_restriction ] || ln -snvf ../../../../. .Build/web/typo3conf/ext/access_restriction"
+      "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
     ],
-    "extension-cleanup-for-release": [
-      "rm -rf Tests/",
-      "rm -f .gitattributes",
-      "rm -f .gitignore",
-      "rm -f composer.lock"
+    "prepare-release": [
+      "rm -rf .github/ Tests/",
+      "rm -f .gitattributes .gitignore .editorconfig composer.lock"
     ]
   },
   "extra": {
     "typo3/cms": {
+      "extension-key": "access_restriction",
       "cms-package-dir": "{$vendor-dir}/typo3/cms",
       "web-dir": ".Build/web"
     }

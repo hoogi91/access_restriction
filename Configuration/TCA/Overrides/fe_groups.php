@@ -1,7 +1,8 @@
 <?php
-defined('TYPO3_MODE') || die();
 
-call_user_func(function ($table) {
+defined('TYPO3') or die();
+
+(static function (string $table = 'fe_groups') {
     $llPrefix = 'LLL:EXT:access_restriction/Resources/Private/Language/locallang_be.xlf:';
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns($table, [
@@ -40,6 +41,4 @@ call_user_func(function ($table) {
             'tx_accessrestriction_restrictions'
         );
     }
-
-}, 'fe_groups');
-
+})();
