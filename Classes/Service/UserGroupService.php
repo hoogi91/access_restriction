@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hoogi91\AccessRestriction\Service;
 
 class UserGroupService
 {
-    private RestrictionService $restrictionService;
-
-    private IpValidationService $ipValidationService;
-
-    public function __construct(RestrictionService $restrictionService, IpValidationService $ipValidationService)
-    {
-        $this->restrictionService = $restrictionService;
-        $this->ipValidationService = $ipValidationService;
+    public function __construct(
+        private readonly RestrictionService $restrictionService,
+        private readonly IpValidationService $ipValidationService
+    ) {
     }
 
+    /**
+     * @return array<int>
+     */
     public function getRestrictionGroups(): array
     {
         $groups = [];
@@ -22,7 +23,10 @@ class UserGroupService
         $ipValidationGroups = $this->restrictionService->getIpAccessRestrictions();
         if (!empty($ipValidationGroups)) {
             foreach ($ipValidationGroups as $groupId => $restrictions) {
-                if ($this->ipValidationService->findInList($restrictions) === true) {
+                if (
+                    (is_string($restrictions) === true || is_array($restrictions) === true)
+                    && $this->ipValidationService->findInList($restrictions) === true
+                ) {
                     $groups[] = $groupId;
                 }
             }

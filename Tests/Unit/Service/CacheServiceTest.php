@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hoogi91\AccessRestriction\Tests\Unit\Service;
 
 use Hoogi91\AccessRestriction\Service\CacheService;
@@ -10,6 +12,10 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class CacheServiceTest extends UnitTestCase
 {
+    /**
+     * @var bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     */
     protected $resetSingletonInstances = true;
 
     private CacheManager $cacheManager;
@@ -23,7 +29,7 @@ class CacheServiceTest extends UnitTestCase
         $this->cacheManager = new CacheManager();
         $this->cacheManager->setCacheConfigurations([
             'accessrestriction' => [
-                'backend'  => TransientMemoryBackend::class,
+                'backend' => TransientMemoryBackend::class,
                 'frontend' => VariableFrontend::class,
             ],
         ]);

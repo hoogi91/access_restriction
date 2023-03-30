@@ -5,6 +5,7 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    versioning-strategy: widen
 
   - package-ecosystem: "github-actions"
     # Workflow files stored in the

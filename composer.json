@@ -17,16 +17,19 @@
     }
   ],
   "require": {
-    "php": "~7.4.0 || ~8.0.0 || ~8.1.0",
-    "typo3/cms-frontend": "^10.4 || ^11.5"
+    "php": "~8.1.0 || ~8.2.0",
+    "typo3/cms-frontend": "^11.5 || ^12.4"
   },
   "require-dev": {
-    "helhum/typo3-console": "^6.7 || ^7.1",
+    "friendsoftypo3/phpstan-typo3": "^0.9.0",
+    "helhum/typo3-console": "^7.1",
     "phpstan/phpstan": "^1.8",
     "phpunit/phpunit": "^9.5",
+    "rector/rector": "^0.15",
     "roave/security-advisories": "dev-latest",
+    "slevomat/coding-standard": "^8.8",
     "squizlabs/php_codesniffer": "^3.5",
-    "typo3/minimal": "^10.4 || ^11.5",
+    "typo3/minimal": "^11.5 || ^12.4",
     "typo3/testing-framework": "^6.14",
     "vimeo/psalm": "^5.1"
   },
@@ -46,16 +49,14 @@
     "bin-dir": ".Build/bin",
     "allow-plugins": {
       "typo3/class-alias-loader": true,
-      "typo3/cms-composer-installers": true
+      "typo3/cms-composer-installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "scripts": {
-    "post-autoload-dump": [
-      "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
-    ],
     "prepare-release": [
       "rm -rf .github/ Tests/",
-      "rm -f .gitattributes .gitignore .editorconfig composer.lock"
+      "rm -f .gitattributes .gitignore .editorconfig composer.lock phpcs.xml phpstan.neon psalm.xml rector.php"
     ]
   },
   "extra": {

@@ -1,0 +1,14 @@
+parameters:
+	level: max
+	paths:
+		- Classes
+		- Tests
+
+	ignoreErrors:
+		-
+			message: "#^Cannot call method fetchAll() on Doctrine\\DBAL\\Result|int.$#"
+			count: 1
+			path: Classes/Service/RestrictionService.php
+
+includes:
+    - .Build/vendor/friendsoftypo3/phpstan-typo3/extension.neon

@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hoogi91\AccessRestriction\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+use const PHP_EOL;
+
 class IpValidationService
 {
-    private string $remoteIp;
+    private readonly string $remoteIp;
 
     public function __construct(?string $ip = null)
     {
@@ -19,9 +23,9 @@ class IpValidationService
     }
 
     /**
-     * @param string|array $list
+     * @param string|array<string> $list
      */
-    public function findInList($list, string $compareIp = null): bool
+    public function findInList(string|array $list, string $compareIp = null): bool
     {
         // check if list needs to be converted to array
         if (is_string($list)) {
@@ -38,6 +42,7 @@ class IpValidationService
                 return true;
             }
         }
+
         return false;
     }
 
@@ -46,18 +51,19 @@ class IpValidationService
         $remoteAddress = ip2long($compareIp ?? $this->remoteIp);
 
         // first try to match against bit range
-        list($subnet, $bits) = GeneralUtility::trimExplode('/', $ipOrRange, true, 2) + ['', ''];
+        [$subnet, $bits] = GeneralUtility::trimExplode('/', $ipOrRange, true, 2) + ['', ''];
         if (!empty($bits)) {
             $subnet = ip2long($subnet);
-            $mask = -1 << (32 - (int)$bits);
+            $mask = -1 << 32 - (int)$bits;
             $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
+
             return ($remoteAddress & $mask) === $subnet;
         }
 
         // then try to match against minus (-) delimited ip range
         $ipRange = array_map('ip2long', GeneralUtility::trimExplode('-', $ipOrRange, true, 2));
         if (count($ipRange) === 2) {
-            return (min($ipRange) <= $remoteAddress && $remoteAddress <= max($ipRange));
+            return min($ipRange) <= $remoteAddress && $remoteAddress <= max($ipRange);
         }
 
         // otherwise try to match single ip

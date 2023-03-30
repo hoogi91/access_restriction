@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hoogi91\AccessRestriction\Tests\Unit\Service;
 
 use Hoogi91\AccessRestriction\Service\IpValidationService;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+
+use const PHP_EOL;
 
 class IpValidationServiceTest extends UnitTestCase
 {
@@ -107,19 +111,24 @@ class IpValidationServiceTest extends UnitTestCase
     }
 
     /**
-     * @depends      testValidationOfSubnet
-     * @depends      testValidationOfRange
-     * @depends      testValidationOfSingleAddress
+     * @depends testValidationOfSubnet
+     * @depends testValidationOfRange
+     * @depends testValidationOfSingleAddress
      * @dataProvider addressLists
      * @dataProvider addressArray
+     *
+     * @param string|array<string> $list
      */
-    public function testValidationOfList($list): void
+    public function testValidationOfList(array|string $list): void
     {
         $ipValidationService = new IpValidationService();
         $this->assertTrue($ipValidationService->findInList($list));
         $this->assertFalse($ipValidationService->findInList($list, '192.168.178.16'));
     }
 
+    /**
+     * @return array<array<string>>
+     */
     public function addressLists(): array
     {
         return [
@@ -132,6 +141,9 @@ class IpValidationServiceTest extends UnitTestCase
         ];
     }
 
+    /**
+     * @return array<array<array<string>>>
+     */
     public function addressArray(): array
     {
         return [

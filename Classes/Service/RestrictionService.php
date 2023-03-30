@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hoogi91\AccessRestriction\Service;
 
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -11,13 +13,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class RestrictionService
 {
-    private CacheService $cacheService;
-
-    public function __construct(CacheService $cacheService)
+    public function __construct(private readonly CacheService $cacheService)
     {
-        $this->cacheService = $cacheService;
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function getIpAccessRestrictions(): array
     {
         return array_filter(array_column(
@@ -27,29 +29,25 @@ class RestrictionService
         ));
     }
 
+    /**
+     * @return array<mixed>
+     */
     protected function getAccessRestrictedFrontendGroups(): array
     {
-        // if cache exists => return it immediately
-        if (($result = $this->cacheService->get('frontendGroups')) !== false) {
-            return $result;
+        // if cache exists => return it
+        $result = $this->cacheService->get('frontendGroups');
+        if ($result !== false) {
+            return (array) $result;
         }
 
-        // get query builder with default restrictions and fetch complete result
-        $result = $this->getQueryWithDefaultRestrictions();
-        if ((new Typo3Version)->getMajorVersion() < 11) {
-            /**
-             * because this is legacy code
-             * @phpstan-ignore-next-line
-             * @psalm-suppress UndefinedInterfaceMethod
-             */
-            $result = $result->execute()->fetchAll();
-        } else {
-            $result = $result->executeQuery()->fetchAllAssociative();
-        }
-
+        // get query builder with default restrictions and fetch complete
+        $result = (new Typo3Version())->getMajorVersion() < 11
+            ? $this->getQueryWithDefaultRestrictions()->execute()->fetchAll()
+            : $this->getQueryWithDefaultRestrictions()->executeQuery()->fetchAllAssociative();
 
         // save to cache and return
         $this->cacheService->set('frontendGroups', $result);
+
         return $result;
     }
 

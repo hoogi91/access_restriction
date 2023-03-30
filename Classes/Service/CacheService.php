@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hoogi91\AccessRestriction\Service;
 
 use TYPO3\CMS\Core\Cache\CacheManager;
@@ -14,23 +16,21 @@ class CacheService
     {
         try {
             $this->cache = $cacheManager->getCache('accessrestriction');
-        } catch (NoSuchCacheException $e) {
+        } catch (NoSuchCacheException) {
             // ignore exception when cache is not found
         }
     }
 
-    public function get(string $identifier)
+    public function get(string $identifier): mixed
     {
         if ($this->cache === null) {
             return false;
         }
+
         return $this->cache->get($identifier);
     }
 
-    /**
-     * @param mixed $data
-     */
-    public function set(string $identifier, $data): void
+    public function set(string $identifier, mixed $data): void
     {
         if ($this->cache !== null) {
             $this->cache->set($identifier, $data);

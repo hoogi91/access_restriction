@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Hoogi91\AccessRestriction\Tests\Functional\Service;
 
 use Hoogi91\AccessRestriction\Service\UserGroupService;
@@ -11,8 +13,12 @@ abstract class AbstractUserGroupService extends FunctionalTestCase
 {
     protected UserGroupService $userGroupService;
 
+    /**
+     * @var array<non-empty-string>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     */
     protected $testExtensionsToLoad = [
-        'typo3conf/ext/access_restriction'
+        'typo3conf/ext/access_restriction',
     ];
 
     protected function setUp(): void
